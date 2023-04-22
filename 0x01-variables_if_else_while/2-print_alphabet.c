@@ -7,5 +7,6 @@
 int main(void)
 {
 	putchar(26);
+	putchar('\n');
 	return (0);
 }
