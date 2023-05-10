@@ -1,6 +1,8 @@
 #include "main.h"
 #include <stdio.h>
 
+int _putchar(char c);
+
 /**
  * _puts_recursion - Function like puts();
  * @s: input
