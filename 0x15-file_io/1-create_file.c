@@ -10,7 +10,7 @@
  * Return: If the function fails or @filename is NULL - -1.
  *         Otherwise - 1.
  */
-int create_file(const char *filename, char *text_content)
+int create_file(const char *filename, const char *text_content)
 {
 	int fd, w, len = 0;
 
