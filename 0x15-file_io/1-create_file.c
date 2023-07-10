@@ -8,7 +8,7 @@
  * Return: If the function succeeds, returns 1.
  *         If an error occurs, returns -1.
  */
-int create_file(const char *filename, char *text_content)
+int create_file(const char *filename, const char *text_content)
 {
 	int fd, w, len = 0;
 
