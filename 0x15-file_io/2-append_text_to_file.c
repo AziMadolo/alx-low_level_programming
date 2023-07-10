@@ -11,7 +11,7 @@
  *         If the file does not exist or the user lacks write permissions - returns -1.
  *         Otherwise, returns 1.
  */
-int append_text_to_file(const char *filename, char *text_content)
+int append_text_to_file(const char *filename, const char *text_content)
 {
 	int file_descriptor, bytes_written, length = 0;
 
