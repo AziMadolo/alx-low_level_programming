@@ -10,11 +10,10 @@ void error_exit(const char *message, int exit_code);
 
 /**
  * create_buffer - Allocates BUFFER_SIZE bytes for a buffer.
- * @file: The name of the file buffer is storing chars for.
  *
  * Return: A pointer to the newly-allocated buffer.
  */
-char *create_buffer(char *file)
+char *create_buffer(void)
 {
 	char *buffer = malloc(sizeof(char) * BUFFER_SIZE);
 
@@ -65,7 +64,7 @@ int main(int argc, char *argv[])
 	if (argc != 3)
 		error_exit("Usage: cp file_from file_to\n", 97);
 
-	buffer = create_buffer(argv[2]);
+	buffer = create_buffer();
 
 	from = open(argv[1], O_RDONLY);
 	if (from == -1)
