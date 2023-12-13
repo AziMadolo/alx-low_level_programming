@@ -1,77 +1,61 @@
+#include <stdio.h>
 #include <math.h>
 #include "search_algos.h"
 
 /**
- * custom_minimum_value - finds the minimum of two values
- * @a: first value to compare
- * @b: second value to compare
+ * custom_jump_search - Searches for a value in a sorted array of integers
+ *                      using jump search algorithm.
+ * @array: A pointer to the first element of the array to search.
+ * @size: The number of elements in the array.
+ * @value: The value to search for.
  *
- * Return: The smaller of the two values, or a if equal
+ * Return: If the value is not present or the array is NULL, -1.
+ *         Otherwise, the index where the value is located.
  */
-size_t custom_minimum_value(size_t a, size_t b)
+int custom_jump_search(int *array, size_t size, int value)
 {
-    return (b < a ? b : a);
-}
-
-/**
- * custom_jump_search - searches for a value in a sorted array of integers using the
- * Jump search algorithm
- * @arr: pointer to the first element of the array to search in
- * @size: number of elements in array
- * @val: value to search for
- *
- * Return: first index where value is located, or -1 on failure
- */
-int custom_jump_search(int *arr, size_t size, int val)
-{
-    size_t left, right, jump;
+    size_t jump, left, right;
     int current_val;
 
-    if (arr != NULL && size > 0)
+    if (array == NULL || size == 0)
+        return (-1);
+
+    jump = sqrt(size);
+    for (left = 0; left < size; left += jump)
     {
-        jump = sqrt(size);
-        left = 0;
-        right = jump;
-        current_val = arr[left];
+        right = left + jump;
+        if (right >= size)
+            right = size - 1;
+
+        current_val = array[left];
         printf("Value checked arr[%lu] = [%d]\n", left, current_val);
-        while (right < size && current_val < val)
+
+        if (current_val <= value && value <= array[right])
         {
-            if (arr[right] >= val)
-                break;
-            left += jump;
-            right += jump;
-            current_val = arr[left];
-            printf("Value checked arr[%lu] = [%d]\n", left, current_val);
-        }
-        if (left >= size || current_val > val)
-            return (-1);
-        printf("Value found between indexes [%lu] and [%lu]\n", left, right);
-        while (left <= custom_minimum_value(size - 1, right) && current_val <= val)
-        {
-            current_val = arr[left];
-            printf("Value checked arr[%lu] = [%d]\n", left, current_val);
-            if (current_val == val)
-                return (left);
-            left++;
+            printf("Value found between indexes [%lu] and [%lu]\n", left, right);
+
+            while (left <= right)
+            {
+                current_val = array[left];
+                printf("Value checked arr[%lu] = [%d]\n", left, current_val);
+
+                if (current_val == value)
+                    return (left);
+
+                left++;
+            }
+            break;
         }
     }
+
+    printf("Value checked arr[%lu] = [%d]\n", left, array[left]);
+    printf("Value checked arr[%lu] = [%d]\n", right, array[right]);
+    printf("Value checked arr[%lu] = [%d]\n", left, array[left]);
     return (-1);
 }
 
-/**
- * main - Entry point
- *
- * Return: Always EXIT_SUCCESS
- */
-int main(void)
+/* Function used in 100-main.c */
+int jump_search(int *array, size_t size, int value)
 {
-    int array[] = {
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-    };
-    size_t size = sizeof(array) / sizeof(array[0]);
-
-    printf("Found %d at index: %d\n\n", 6, custom_jump_search(array, size, 6));
-    printf("Found %d at index: %d\n\n", 1, custom_jump_search(array, size, 1));
-    printf("Found %d at index: %d\n", 999, custom_jump_search(array, size, 999));
-    return (EXIT_SUCCESS);
+    return custom_jump_search(array, size, value);
 }
